@@ -264,7 +264,9 @@ func (c *baseClient) initConn(ctx context.Context, cn *pool.Conn) error {
 		return nil
 	})
 	if err != nil {
-		return err
+		if err.Error() != "ERR Client sent AUTH, but no password is set" {
+			return err
+		}
 	}
 
 	if c.opt.OnConnect != nil {
